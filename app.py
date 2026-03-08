@@ -1,5 +1,6 @@
 import streamlit as st
-from database import get_candidates_for_constituency, fetch_last_7_days_news
+from constituencies import STATE_CONSTITUENCY_MAP
+from database import fetch_last_7_days_news
 from nlp_engine import analyze_news_sentiments
 from matcher import calculate_match_score
 
