@@ -4,50 +4,39 @@ from database import fetch_last_7_days_news
 from nlp_engine import analyze_news_sentiments
 from matcher import calculate_match_score
 
-# --- UI Setup ---
-st.set_page_config(page_title="Constituency Matcher", page_icon="📍", layout="wide")
-
 st.title("📍 Constituency Candidate Matcher")
-st.markdown("Compare candidates in your area based on your personal policy priorities.")
+st.write("Compare candidates in your area based on your personal policy priorities.")
 
-# --- Sidebar: User Input ---
-st.sidebar.header("Your Policy Priorities")
-st.sidebar.info("Rate how much you care about these sectors (1-10)")
+# --- SIDEBAR (Sliders) ---
+st.sidebar.header("Set Your Priorities")
+tech = st.sidebar.slider("Technology", 0, 100, 50)
+health = st.sidebar.slider("Healthcare", 0, 100, 50)
+econ = st.sidebar.slider("Economy", 0, 100, 50)
+user_priorities = {"Technology": tech, "Healthcare": health, "Economy": econ}
 
-user_priorities = {
-    "Technology": st.sidebar.slider("Technology & AI", 1, 10, 5),
-    "Healthcare": st.sidebar.slider("Healthcare", 1, 10, 5),
-    "Economy": st.sidebar.slider("Economy & Finance", 1, 10, 5)
-}
+# --- MAIN SCREEN (Dropdowns) ---
+st.subheader("Select Your Location")
 
-# --- Main Section: Constituency Selection ---
-location = st.selectbox("Select your Constituency:", ["Kurnool", "Gurgaon", "New Delhi"])
+# 1. First box: Pick the State
+selected_state = st.selectbox("1. Select State:", options=list(STATE_CONSTITUENCY_MAP.keys()))
 
+# 2. Second box: Pick the City (This automatically updates based on the state!)
+constituencies_in_state = STATE_CONSTITUENCY_MAP[selected_state]
+selected_constituency = st.selectbox("2. Select Constituency:", options=constituencies_in_state)
+
+# --- RUN BUTTON ---
 if st.button("Run Analysis"):
-    candidates = get_candidates_for_constituency(location)
+    search_query = f"{selected_constituency}, {selected_state}"
     
-    if candidates:
-        st.subheader(f"Matching Results for {location}")
+    with st.spinner(f"Analyzing news for {search_query}..."):
+        # We only use the news fetcher now, NO old candidate functions!
+        news = fetch_last_7_days_news(search_query)
         
-        # Displaying candidates side-by-side using columns
-        cols = st.columns(len(candidates))
-        
-        for index, name in enumerate(candidates):
-            with cols[index]:
-                with st.spinner(f"Analyzing {name}..."):
-                    # 1. Fetch live news (database.py)
-                    news = fetch_last_7_days_news(name)
-                    # 2. Extract policy profile (nlp_engine.py)
-                    profile = analyze_news_sentiments(news)
-                    # 3. Calculate Euclidean Match (matcher.py)
-                    score = calculate_match_score(user_priorities, profile)
-                    
-                    # 4. Render Results
-                    st.metric(label=name, value=f"{score}% Match")
-                    st.progress(score / 100)
-                    
-                    with st.expander("Show Detailed Focus"):
-                        st.write(f"Based on {len(news)} recent headlines.")
-                        st.json(profile)
-    else:
-        st.warning("Data for this area is currently being updated.")
+        if news:
+            profile = analyze_news_sentiments(news)
+            score = calculate_match_score(user_priorities, profile)
+            
+            st.metric(label=f"Match Score for {selected_constituency}", value=f"{score}%")
+            st.progress(score / 100)
+        else:
+            st.error("No recent news found for this area. Try a different city.")
