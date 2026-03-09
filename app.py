@@ -1,5 +1,4 @@
 import streamlit as st
-# I added CANDIDATE_MAP to the import line right here:
 from constituencies import STATE_CONSTITUENCY_MAP, CANDIDATE_MAP
 from database import fetch_last_7_days_news
 from nlp_engine import analyze_news_sentiments
@@ -24,21 +23,27 @@ selected_constituency = st.selectbox("2. Select Constituency:", options=constitu
 
 # --- RUN BUTTON ---
 if st.button("Run Analysis"):
-    search_query = f"{selected_constituency}, {selected_state}"
     
-    with st.spinner(f"Analyzing news for {search_query}..."):
-        news = fetch_last_7_days_news(search_query)
-        
-        if news:
-            profile = analyze_news_sentiments(news)
-            score = calculate_match_score(user_priorities, profile)
+    # 1. Look up the list of names for the city we selected
+    politicians = CANDIDATE_MAP.get(selected_constituency, ["Candidate A", "Candidate B"])
+    
+    st.write(f"### Comparing candidates in {selected_constituency}:")
+    
+    # 2. Go through the list one by one
+    for name in politicians:
+        with st.spinner(f"Reading news for {name}..."):
             
-            # --- NEW: Look up the politician's name! ---
-            # If the city isn't in our list yet, it just says "Local Representative"
-            politician_name = CANDIDATE_MAP.get(selected_constituency, "Local Representative")
+            # Fetch news specifically for this person
+            news = fetch_last_7_days_news(name)
             
-            # Now it prints the name AND the city!
-            st.metric(label=f"Match Score for {politician_name} ({selected_constituency})", value=f"{score}%")
+            if news:
+                profile = analyze_news_sentiments(news)
+                score = calculate_match_score(user_priorities, profile)
+            else:
+                # If they are not in the news this week, give them a backup score of 35
+                score = 35 
+                
+            # 3. Put their name and their score on the screen
+            st.metric(label=f"{name}", value=f"{score}% Match")
             st.progress(score / 100)
-        else:
-            st.error("No recent news found for this area. Try a different city.")
+            st.divider() # Draw a line under them so it looks neat
