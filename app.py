@@ -1,5 +1,6 @@
 import streamlit as st
-from constituencies import STATE_CONSTITUENCY_MAP
+# I added CANDIDATE_MAP to the import line right here:
+from constituencies import STATE_CONSTITUENCY_MAP, CANDIDATE_MAP
 from database import fetch_last_7_days_news
 from nlp_engine import analyze_news_sentiments
 from matcher import calculate_match_score
@@ -17,10 +18,7 @@ user_priorities = {"Technology": tech, "Healthcare": health, "Economy": econ}
 # --- MAIN SCREEN (Dropdowns) ---
 st.subheader("Select Your Location")
 
-# 1. First box: Pick the State
 selected_state = st.selectbox("1. Select State:", options=list(STATE_CONSTITUENCY_MAP.keys()))
-
-# 2. Second box: Pick the City (This automatically updates based on the state!)
 constituencies_in_state = STATE_CONSTITUENCY_MAP[selected_state]
 selected_constituency = st.selectbox("2. Select Constituency:", options=constituencies_in_state)
 
@@ -29,14 +27,18 @@ if st.button("Run Analysis"):
     search_query = f"{selected_constituency}, {selected_state}"
     
     with st.spinner(f"Analyzing news for {search_query}..."):
-        # We only use the news fetcher now, NO old candidate functions!
         news = fetch_last_7_days_news(search_query)
         
         if news:
             profile = analyze_news_sentiments(news)
             score = calculate_match_score(user_priorities, profile)
             
-            st.metric(label=f"Match Score for {selected_constituency}", value=f"{score}%")
+            # --- NEW: Look up the politician's name! ---
+            # If the city isn't in our list yet, it just says "Local Representative"
+            politician_name = CANDIDATE_MAP.get(selected_constituency, "Local Representative")
+            
+            # Now it prints the name AND the city!
+            st.metric(label=f"Match Score for {politician_name} ({selected_constituency})", value=f"{score}%")
             st.progress(score / 100)
         else:
             st.error("No recent news found for this area. Try a different city.")
