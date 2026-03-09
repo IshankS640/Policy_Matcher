@@ -7,27 +7,33 @@ from matcher import calculate_match_score
 # --- Wide Mode & Page Title ---
 st.set_page_config(page_title="Policy Match Maker", page_icon="🗳️", layout="wide")
 
-# --- THE MAGIC DESIGN UPGRADE (CSS) ---
-# This block paints the background and makes the score boxes look like floating cards
+# --- THE FIXED CSS ---
 st.markdown("""
 <style>
-    /* 1. The Solid Background Color (Deep Slate Blue) */
-    .stApp {
-        background-color: #0F172A; 
-    }
+    /* 1. Dark Backgrounds for the main page AND the sidebar */
+    .stApp { background-color: #0F172A; }
+    [data-testid="stSidebar"] { background-color: #0F172A; border-right: 1px solid #1E293B; }
     
-    /* 2. The Font Color for all text (Crisp White) */
-    h1, h2, h3, p, span, label, div {
-        color: #FFFFFF !important; 
-    }
+    /* 2. Make the titles and labels white */
+    h1, h2, h3, p, label { color: #FFFFFF !important; }
     
-    /* 3. Make the score boxes pop out with a bright Cyan line */
+    /* 3. Keep the dropdown text black so you can actually read it! */
+    div[data-baseweb="select"] * { color: #0F172A !important; }
+    
+    /* 4. The attractive metric score cards */
     div[data-testid="stMetric"] {
-        background-color: #1E293B; /* Slightly lighter box color */
+        background-color: #1E293B; 
         border-radius: 10px;
         padding: 15px;
-        border-left: 5px solid #06B6D4; /* Bright attractive cyan line */
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Adds a cool shadow */
+        border-left: 5px solid #06B6D4; 
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    
+    /* 5. Force the missing Sidebar Arrow to be white and visible */
+    [data-testid="collapsedControl"] {
+        color: #FFFFFF !important; 
+        background-color: #1E293B !important;
+        border-radius: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
