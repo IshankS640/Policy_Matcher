@@ -11,24 +11,23 @@ st.set_page_config(page_title="Policy Match Maker", page_icon="🗳️", layout=
 # This block paints the background and makes the score boxes look like floating cards
 st.markdown("""
 <style>
-    /* 1. A soft blue-to-white gradient background for the whole page */
+    /* 1. The Solid Background Color (Deep Slate Blue) */
     .stApp {
-        background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+        background-color: #0F172A; 
     }
     
-    /* 2. Make the Score Boxes look like crisp, white floating cards with a shadow */
+    /* 2. The Font Color for all text (Crisp White) */
+    h1, h2, h3, p, span, label, div {
+        color: #FFFFFF !important; 
+    }
+    
+    /* 3. Make the score boxes pop out with a bright Cyan line */
     div[data-testid="stMetric"] {
-        background-color: white;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        border-left: 6px solid #4facfe;
-    }
-    
-    /* 3. Clean up the sidebar so it stays bright and readable */
-    [data-testid="stSidebar"] {
-        background-color: #ffffff;
-        box-shadow: 2px 0px 5px rgba(0,0,0,0.05);
+        background-color: #1E293B; /* Slightly lighter box color */
+        border-radius: 10px;
+        padding: 15px;
+        border-left: 5px solid #06B6D4; /* Bright attractive cyan line */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Adds a cool shadow */
     }
 </style>
 """, unsafe_allow_html=True)
