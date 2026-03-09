@@ -1,3 +1,6 @@
+
+# The updated, complete list of 2024 MPs for your app
+# 1. The States and their Cities
 STATE_CONSTITUENCY_MAP = {
     "Andhra Pradesh": ["Kurnool", "Nandyal", "Vijayawada", "Visakhapatnam"],
     "Delhi": ["Chandni Chowk", "New Delhi", "South Delhi", "East Delhi"],
@@ -5,53 +8,24 @@ STATE_CONSTITUENCY_MAP = {
     "Maharashtra": ["Mumbai North", "Pune", "Nagpur"],
     "Uttar Pradesh": ["Lucknow", "Varanasi", "Amethi"]
 }
-# The updated, complete list of 2024 MPs for your app
+
+# 2. The Cities and their Candidates
 CANDIDATE_MAP = {
-    # Andhra Pradesh
-    "Kurnool": "Bastipati Nagaraju",
-    "Nandyal": "Byreddy Shabari",
-    "Vijayawada": "Kesineni Sivanath",
-    "Visakhapatnam": "Sribharat Mathukumilli",
-    "Guntur": "Pemmasani Chandrasekhar",
-    "Tirupati": "Gurumoorthy Maddila",
-    
-    # Delhi
-    "Chandni Chowk": "Praveen Khandelwal",
-    "East Delhi": "Harsh Malhotra",
-    "New Delhi": "Bansuri Swaraj",
-    "North East Delhi": "Manoj Tiwari",
-    "North West Delhi": "Yogender Chandoliya",
-    "South Delhi": "Ramvir Singh Bidhuri",
-    "West Delhi": "Kamaljeet Sehrawat",
-    
-    # Karnataka
-    "Bangalore Central": "P. C. Mohan",
-    "Bangalore North": "Shobha Karandlaje",
-    "Bangalore South": "Tejasvi Surya",
-    "Mysore": "Yaduveer Wadiyar",
-    "Udupi Chikmagalur": "Kota Srinivas Poojary",
-    
-    # Maharashtra
-    "Mumbai North": "Piyush Goyal",
-    "Mumbai South": "Arvind Sawant",
-    "Pune": "Murlidhar Mohol",
-    "Nagpur": "Nitin Gadkari",
-    "Thane": "Naresh Mhaske",
-    "Nashik": "Rajabhau Waje",
-    
-    # Telangana
-    "Adilabad": "Godam Nagesh",
-    "Hyderabad": "Asaduddin Owaisi",
-    "Karimnagar": "Bandi Sanjay Kumar",
-    "Khammam": "Ramasahayam Raghuram Reddy",
-    "Nizamabad": "Arvind Dharmapuri",
-    "Secunderabad": "G. Kishan Reddy",
-    
-    # Uttar Pradesh
-    "Agra": "S. P. Singh Baghel",
-    "Aligarh": "Satish Kumar Gautam",
-    "Amethi": "Kishori Lal Sharma",
-    "Lucknow": "Rajnath Singh",
-    "Varanasi": "Narendra Modi",
-    "Gorakhpur": "Ravi Kishan"
+    "Kurnool": ["Bastipati Nagaraju", "B. Y. Ramaiah", "Adithya Kumar"],
+    "Nandyal": ["Byreddy Shabari", "Pocha Brahmananda Reddy"],
+    "Vijayawada": ["Kesineni Sivanath", "Kesineni Srinivas"],
+    "Visakhapatnam": ["Sribharat Mathukumilli", "Jhansi Lakshmi Botcha"],
+    "Chandni Chowk": ["Praveen Khandelwal", "Jai Prakash Agarwal"],
+    "New Delhi": ["Bansuri Swaraj", "Somnath Bharti"],
+    "South Delhi": ["Ramvir Singh Bidhuri", "Sahi Ram Pehalwan"],
+    "East Delhi": ["Harsh Malhotra", "Kuldeep Kumar"],
+    "Bangalore Central": ["P. C. Mohan", "Mansoor Ali Khan"],
+    "Mysore": ["Yaduveer Wadiyar", "M. Lakshman"],
+    "Udupi": ["Kota Srinivas Poojary", "K. Jayaprakash Hegde"],
+    "Mumbai North": ["Piyush Goyal", "Bhushan Patil"],
+    "Pune": ["Murlidhar Mohol", "Ravindra Dhangekar"],
+    "Nagpur": ["Nitin Gadkari", "Vikas Thakre"],
+    "Lucknow": ["Rajnath Singh", "Ravidas Mehrotra"],
+    "Varanasi": ["Narendra Modi", "Ajay Rai"],
+    "Amethi": ["Kishori Lal Sharma", "Smriti Irani"]
 }
